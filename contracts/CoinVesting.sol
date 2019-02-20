@@ -5,7 +5,7 @@ import "zeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
-import "./ReentrancyGuard.sol";
+import "zeppelin-solidity/contracts/ReentrancyGuard.sol";
 
 
 /**
@@ -32,7 +32,7 @@ contract CoinVesting is Ownable, ReentrancyGuard {
     uint256 public released = 0;
     bool public revoked = false;
 
-   /**
+    /**
     * @dev Creates a vesting contract that vests its balance of coin to the
     * _beneficiary, gradually in a linear fashion until _start + _duration. By then all
     * of the balance will have vested.
@@ -55,14 +55,14 @@ contract CoinVesting is Ownable, ReentrancyGuard {
         start = _start;
     }
 
-   /**
+    /**
     * @notice fallback function
     */
     function () payable nonReentrant public {
 
     }
 
-   /**
+    /**
     * @notice Transfers vested coins to beneficiary.
     */
     function release() public {
@@ -77,7 +77,7 @@ contract CoinVesting is Ownable, ReentrancyGuard {
         Released(unreleased);
     }
 
-   /**
+    /**
     * @notice Allows the owner to revoke the vesting. Coins already vested
     * remain in the contract, the rest are returned to the owner.
     */
@@ -98,7 +98,7 @@ contract CoinVesting is Ownable, ReentrancyGuard {
         Revoked();
     }
 
-   /**
+    /**
     * @dev Calculates the amount that has already vested but hasn't been released yet.
     */
     function releasableAmount() public view returns (uint256) {
@@ -106,7 +106,7 @@ contract CoinVesting is Ownable, ReentrancyGuard {
         return vestedAmount().sub(released);
     }
 
-   /**
+    /**
     * @dev Calculates the amount that has already vested.
     */
     function vestedAmount() public view returns (uint256) {
